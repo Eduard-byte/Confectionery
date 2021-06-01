@@ -1,0 +1,68 @@
+﻿<Page x:Class="PastryShop.Pages.GoodsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PastryShop.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GoodsPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Введите название: " Width="175" TextAlignment="Right"></TextBlock>
+                <TextBox Width="225" x:Name="TBoxSearch" TextChanged="TBoxSearch_TextChanged"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Выберите тип: " Width="175" TextAlignment="Right"></TextBlock>
+                <ComboBox Width="225" Name="ComboType" SelectionChanged="ComboType_SelectionChanged" DisplayMemberPath="CategoryName"></ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Сортировать по: " Width="175" TextAlignment="Right"/>
+                <ComboBox Width="225" x:Name="ComboSort" SelectionChanged="ComboSortSelectionChanged" >
+                    <ComboBoxItem Content="По возрастанию"/>
+                    <ComboBoxItem Content="По убыванию"/>
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+
+        <ListView Grid.Row="1"
+                  Name="LViewGoods"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  HorizontalContentAlignment="Center">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="15" Width="330" Background="{Binding GetColor}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="310"></RowDefinition>
+                            <RowDefinition Height="25"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Image Width="240" Stretch="Uniform" HorizontalAlignment="Center" Margin="5" Source="{Binding Path=GetPhoto}"/>
+
+                        <TextBlock Text="{Binding GoodsName}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" FontSize="20"></TextBlock>
+                        <TextBlock Text="{Binding Price, StringFormat={}{0:N2} руб}" Margin="15" HorizontalAlignment="Right" FontSize="18" FontWeight="Bold" Grid.Row="2"></TextBlock>
+                        <TextBlock Text="{Binding CookingTime, StringFormat={}Готовится: {0}}" Margin="15" HorizontalAlignment="Left" FontSize="14" Grid.Row="2"></TextBlock>
+                        <TextBlock Text="{Binding GetStatus}" Margin="0 0 0 15" Height="Auto" Grid.Row="3"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
